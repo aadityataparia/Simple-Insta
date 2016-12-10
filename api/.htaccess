@@ -1,0 +1,89 @@
+RewriteEngine On
+RewriteBase /
+
+Options +FollowSymLinks -MultiViews -Indexes
+
+<IfModule mod_deflate.c>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml
+        AddType image/svg+xml .svg
+        AddOutputFilterByType DEFLATE image/svg+xml
+        AddOutputFilterByType DEFLATE text/css
+        AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript
+        AddOutputFilterByType DEFLATE application/rss+xml
+        AddOutputFilterByType DEFLATE application/xml
+        AddOutputFilterByType DEFLATE application/json
+    </IfModule>
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|swf|svg|webp|mp4|mkv|woff|ttf|otf|woff2)$">
+        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        # Header set Pragma "no-cache"
+        Header set Cache-Control "public, no-cache, must-revalidate"
+        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
+        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    </FilesMatch>
+    <FilesMatch "\.(js|css|swf|html)$">
+        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        # Header set Pragma "no-cache"
+        Header set Cache-Control "public, no-cache, must-revalidate"
+        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
+        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    </FilesMatch>
+    <FilesMatch "\.(php|json)$">
+        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        # Header set Pragma "no-cache"
+        # RequestHeader unset If-Modified-Since
+        Header set Cache-Control "private, no-store, no-cache, must-revalidate"
+        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
+        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    </FilesMatch>
+    Header unset ETag
+    Header unset Pragma
+    RequestHeader unset Pragma
+</IfModule>
+
+FileETag None
+
+RewriteCond "%{HTTP_HOST}" "^tuneout.in" [NC]
+RewriteCond "%{HTTP_HOST}" "!^$"
+RewriteRule "^/?(.*)"      "https://www.tuneout.in/" [L,R=307]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ([^\/]+)\/auth\/([^\?]+)\??(.*)$ $1/auth/index.php?url=$2&$3 [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule auth\/([^\?]+)\??(.*)$ v1/auth/index.php?url=$1&$2 [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ([^\/]+)\/aws\/([^\?]+)\??(.*)$ $1/aws/index.php?url=$2&$3 [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule aws\/([^\?]+)\??(.*)$ v1/aws/index.php?url=$1&$2 [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (v[0-9]+)\/([^\?]+)\??(.*)$ $1/api.php?url=$2&$3 [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ([^\?]+)\??(.*)$ v1/api.php?url=$1&$2 [L,QSA,NC]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ([^\/]+)\/admin\/([^\?]+)\??(.*)$ $1/admin/index.php?url=$2&$3 [L,QSA,NC]
+#
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule admin\/([^\?]+)\??(.*)$ v1/admin/index.php?url=$1&$2 [L,QSA,NC]
+#
+#errorDocument 400 https://www.dely.in/
+#errorDocument 401 https://www.dely.in/
+#errorDocument 403 https://www.dely.in/
+#errorDocument 404 https://www.dely.in/
+#errorDocument 500 https://www.dely.in/
