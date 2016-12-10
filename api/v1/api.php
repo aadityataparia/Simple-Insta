@@ -4,18 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require './vendor/autoload.php';
-
 $http_origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : ' ';
 
-if (preg_match('/http(s)?:\/\/(.*\.)?(tuneout.in)/', $http_origin) || preg_match('/http(s)?:\/\/(.*\.)?(tuneout)([A-Za-z]+)$/', $http_origin))
-{
-  header('Access-Control-Allow-Origin: '.$http_origin);
-} else {
-  header('Access-Control-Allow-Origin: https://tuneout.in');
-  die();
-}
-
+header('Access-Control-Allow-Origin: '.$http_origin);
 header('Expires: -1');
 header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE, HEAD');
 header('Access-Control-Allow-Headers: x-session-pass');

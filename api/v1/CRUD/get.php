@@ -2,18 +2,23 @@
   $userID1 = $this->userID;
   switch ($this->data[0]) {
     case 'feed':
-      $from = $this->request['from'] || 0;
-        $select = "SELECT *
-        FROM photos
-        LIMIT ".$from.",10";
-        $stmt = $this->conn->prepare($select);
-        $stmt->execute();
-        $this->outputPHP['results']['photos'] = $stmt->fetchAll();
-        if(sizeof($this->outputPHP['results']['photos']) < 10){
-          $this->outputPHP['more'] = false;
-        } else {
-          $this->outputPHP['more'] = true;
-        }
+      if(isset($this->request['from'])){
+        $from = $this->request['from'];
+      } else {
+        $from = 0;
+      }
+      $select = "SELECT *
+      FROM photos
+      WHERE deleted = 0
+      LIMIT ".$from.",10";
+      $stmt = $this->conn->prepare($select);
+      $stmt->execute();
+      $this->outputPHP['results']['photos'] = $stmt->fetchAll();
+      if(sizeof($this->outputPHP['results']['photos']) < 10){
+        $this->outputPHP['more'] = false;
+      } else {
+        $this->outputPHP['more'] = true;
+      }
       break;
     case 'user':
       if(isset($userID1) && is_numeric($userID1)) {
@@ -32,7 +37,7 @@
         $select = "SELECT *
         FROM photos
         LIMIT ".$from.",10
-        WHERE userid = :userid";
+        WHERE userid = :userid AND deleted = 0";
         $stmt = $this->conn->prepare($select);
         $stmt->execute(array("userid"=>$userID1));
         $this->outputPHP['results']['myphotos'] = $stmt->fetchAll();
@@ -41,17 +46,19 @@
       }
       break;
     case 'photo':
-      if(!isset($this->request['photoid']) && !isset($this->data[1])){
+      if(isset($this->request['photoid'])){
+      } else if (isset($this->data[1])){
+        $this->request['photoid'] = $this->data[1];
+      } else {
         $this->gotError(206);
         return false;
       }
-      $this->request['photoid'] = $this->data[1] || $this->request['photoid'];
       $select = 'SELECT
        *
       FROM
         photos
       WHERE
-        id = :photoid
+        id = :photoid AND deleted = 0
       LIMIT 1';
       $stmt = $this->conn->prepare($select);
       $stmt->execute(array('photoid' => $this->request['photoid']));

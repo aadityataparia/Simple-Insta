@@ -1,8 +1,0 @@
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule v1/auth/([^\?]+)\??(.*)$ v1/auth/index.php?url=$1&$2 [L,QSA,NC]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule v1/([^\?]+)\??(.*)$ v1/api.php?url=$1&$2 [L,QSA,NC]

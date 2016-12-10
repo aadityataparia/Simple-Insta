@@ -26,10 +26,6 @@ class RestCRUD
         if(!$this->checkMethod($data->getMethod())){
           return false;
         }
-        if(!$this->ea && $this->data[0] != "locations" && $this->data[0] !== "user"){
-          $this->gotError(401);
-          return false;
-        }
         switch ($data->getMethod()) {
           case 'GET':
             $stmt = $this->GETq();
