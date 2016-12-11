@@ -860,7 +860,7 @@ function changePass(newpass){
     if (res.status == 200) {
       notify("New Password set successfully.", "green");
       user.password = 60;
-      hideAddPC('#userdetails');
+      hideAddPC('#setpass');
     }
   });
 }
