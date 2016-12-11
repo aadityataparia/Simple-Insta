@@ -814,7 +814,7 @@ document.querySelector("#uploadpic input").addEventListener("change", function()
   }, function(res) {
     if (res.status == 200) {
       notify("Image uploaded successfully", "green");
-      // window.location = "./photo/"+res.results.photo.id;
+      window.location = "./photo?id="+res.results[0].id;
     } else if (res.status == 1000) {
       notify(res.customerror, "red");
     } else {

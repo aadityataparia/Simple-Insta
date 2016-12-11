@@ -11,8 +11,8 @@
       FROM photos
       INNER JOIN users ON users.id = photos.userid
       WHERE deleted = 0
-      ORDER BY id DESC
-      LIMIT ".$from.",10";
+      ORDER BY id DESC";
+      //LIMIT ".$from.",10";
       $stmt = $this->conn->prepare($select);
       $stmt->execute();
       $this->outputPHP['results'] = $stmt->fetchAll();
@@ -45,8 +45,8 @@
         FROM photos
         INNER JOIN users ON users.id = photos.userid
         WHERE photos.userid = :userid AND photos.deleted = 0
-        ORDER BY id DESC
-        LIMIT ".$from.",10";
+        ORDER BY id DESC";
+        //LIMIT ".$from.",10";
         $stmt = $this->conn->prepare($select);
         $stmt->execute(array("userid"=>$userID1));
         $this->outputPHP['results'] = $stmt->fetchAll();

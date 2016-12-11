@@ -11,6 +11,9 @@ switch ($this->data[0]) {
     $stmt->execute(array("photoid"=>$this->request['photoid'],"userid"=>$userID1));
     $id = $this->conn->lastInsertId();
     $this->outputPHP['deleted_id'] = $id;
+    $path = "./uploads/";
+    $dst = $path . 'photos/' . $id . '.jpg';
+    unlink($dst);
     break;
   case 'comment':
     $update = "
