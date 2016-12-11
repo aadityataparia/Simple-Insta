@@ -784,7 +784,8 @@ var Bfeed = {
           '<div class="username s-8 m-9">'+photo.email+'</div>' +
            deleteuser +
         '</div>' +
-        '<a href="./photo?id='+photo.id+'"><img class="fit" src="./api/v1/uploads/photos/'+photo.id+'.jpg" title="'+photo.email+'\'s photo" alt="'+photo.email+'\'s photo"></a>' +
+        '<a href="./photo?id='+photo.id+'"><img class="fit" src="./api/v1/uploads/photos/'+photo.id+'.jpg" title="'+photo.email+'\'s photo" alt="'+photo.email+'\'s photo">' +
+        '<p class="acomment">Comment on photo</p></a>' +
         '<div class="comments">' +
           comments +
         '</div>' +
@@ -915,7 +916,7 @@ if (path[path.length-1].toLowerCase() == 'myphotos') {
     }
   });
 } else {
-  addClass(MAIN,"feed");
+  addClass(MAIN,"home");
   API.get("./api/v1/api.php", {
     url: "feed",
     from: 0

@@ -767,8 +767,15 @@ body.verify {
             padding: 2px;
         }
     }
+    .acomment{
+      display: none;
+    }
 }
 
-.feed .photo .input{
+.home .feed .photo .input{
   display: none;
+}
+.home .feed .acomment{
+  display: block;
+  text-decoration: underline;
 }
