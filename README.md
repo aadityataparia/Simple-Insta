@@ -1,5 +1,7 @@
-# Cookpad
-Cookpad test - web
+# ATcookpad
+Made in 1 day for Cookpad recruitment test
+
+test details -
 Write a web application allows users to upload, share and comment on images.
 
 Your application must implement at least the following user stories.:
