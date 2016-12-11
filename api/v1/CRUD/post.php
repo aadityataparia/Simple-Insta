@@ -12,7 +12,7 @@ switch ($this->data[0]) {
   case 'dp':
     $path = "./uploads/";
     $img = $_FILES['photoimg']['tmp_name'];
-    $dst = $path . 'dps/' . $userID1;
+    $dst = $path . 'dps/' . $userID1 . '.jpg';
     if (($img_info = getimagesize($img)) === FALSE){
       $this->gotError(1000);
       $this->outputPHP['customerror'] = "Invalid image";
@@ -48,7 +48,6 @@ switch ($this->data[0]) {
             $crop_y     =   ceil(($h - $w) / 2);
         }
 
-    // I think this is where you are mainly going wrong
     $tmp = imagecreatetruecolor($width,$height);
 
     imagecopyresampled($tmp, $src, 0, 0, $crop_x, $crop_y, $new_width, $new_height, $w, $h);
@@ -65,7 +64,7 @@ switch ($this->data[0]) {
 
     $path = "./uploads/";
     $img = $_FILES['photoimg']['tmp_name'];
-    $dst = $path . 'photos/' . $id;
+    $dst = $path . 'photos/' . $id . '.jpg';
     if (($img_info = getimagesize($img)) === FALSE){
       $this->gotError(1000);
       $this->outputPHP['customerror'] = "Invalid image";
@@ -83,27 +82,16 @@ switch ($this->data[0]) {
     }
 
     // size from
-    $height = 1000;
-    $width = 1000;
     list($w, $h) = getimagesize($img);
     $tmp = imagecreatetruecolor($w,$h);
+    $height = 1000/$w*$h;
+    $width = 1000;
+    $new_height =   $height;
+    $new_width  =   floor($w * ($new_height / $h));
+    $crop_x     =   0;
+    $crop_y     =   0;
 
-    if($w > $h) {
-            $new_height =   $height;
-            $new_width  =   floor($w * ($new_height / $h));
-            $crop_x     =   ceil(($w - $h) / 2);
-            $crop_y     =   0;
-        }
-    else {
-            $new_width  =   $width;
-            $new_height =   floor( $h * ( $new_width / $w ));
-            $crop_x     =   0;
-            $crop_y     =   ceil(($h - $w) / 2);
-        }
-
-    // I think this is where you are mainly going wrong
     $tmp = imagecreatetruecolor($width,$height);
-
     imagecopyresampled($tmp, $src, 0, 0, $crop_x, $crop_y, $new_width, $new_height, $w, $h);
     imagejpeg($tmp, $dst);
 

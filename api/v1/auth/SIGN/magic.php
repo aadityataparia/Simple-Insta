@@ -1,21 +1,10 @@
 <?php
 
-require "../vendor/phpmailer/PHPMailerAutoload.php";
-
-$mail = new PHPMailer;
-
-// $mail->isSMTP();                                      // Set mailer to use SMTP
-// $mail->Host = 'email-smtp.us-west-2.amazonaws.com';  // Specify main and backup SMTP servers
-// $mail->SMTPAuth = true;                               // Enable SMTP authentication
-// $mail->Username = 'AKIAJ5XIVZGDERDSWADQ';                 // SMTP username
-// $mail->Password = 'AnhoOwQzPMNG++6w429GOS5XfSGqv3Jc4WYtjLGwt8i5';                           // SMTP password
-// $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-// $mail->Port = 587;
-
 $select="SELECT id
 from users
 WHERE email = :email LIMIT 1";
 $stmt=$this->conn->prepare($select);
+
 $stmt->execute(array("email" => $emailtos));
 $res = $stmt->fetchAll();
 if(sizeof($res) < 1){
@@ -34,11 +23,12 @@ $stmt->execute(array("email" => $emailtos));
 $res = $stmt->fetchAll();
 if(sizeof($res) < 1){
   $code = $this->uniqueid("alnum",16,false);
-  $insert="INSERT into emailverify(id,code,email) values(NULL,?,?)";
+  $insert="INSERT into emailverify(code,email) values(:code,:email)";
   $stmt=$this->conn->prepare($insert);
-  $stmt->execute(array($code,$emailtos));
+  $stmt->execute(array("code"=>$code,"email"=>$emailtos));
   $this->outputPHP["codenew"] = true;
   $linkid = $this->conn->lastInsertId();
+  $this->outputPHP["lastinserted"] = $linkid;
 } else {
   $code = $res[0]["code"];
   $stmt = $this->conn->prepare("UPDATE emailverify SET verified=0,time_added = NOW() WHERE code=:code");
@@ -76,16 +66,5 @@ $html = '<p><span class="im" style="color: rgb(80, 0, 80); font-family: arial, s
 Note: Your magic link will expire in 24 hours, and can only be used one time.</span></p>';
 $message .= $html;
 $message .= "\r\n\r\n--" . $boundary . "--";
-// $this->outputPHP["emailsent"] = mail($to, $subject, $message, $headers);
-
-
-
-$mail->setFrom('no-reply@mail.tuneout.in', 'TuneOut');
-$mail->addAddress($to);
-$mail->isHTML(true);
-$mail->Subject = $subject;
-$mail->Body = $html;
-$mail->AltBody = $text;
-$this->outputPHP["emailsent"] = $mail->Send();
-$this->outputPHP["pmerror"] = $mail->ErrorInfo;
+$this->outputPHP["emailsent"] = mail($to, $subject, $message, $headers);
 ?>

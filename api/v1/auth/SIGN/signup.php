@@ -66,6 +66,13 @@ if($this->request['type'] == 'password') {
       $this->gotError(401);
       return false;
     }
+  } else if($this->request['what'] == 'signup'){
+    $update = "UPDATE
+    users
+    SET password = :hash
+    WHERE id = :userid";
+    $stmt=$this->conn->prepare($update);
+    $stmt->execute(array("hash" => $hash, "userid" => $this->userID));
   } else {
     $this->gotError(206);
     return false;

@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /
+RewriteBase /cookpad/
 
 Options +FollowSymLinks -MultiViews -Indexes
 
@@ -16,33 +16,6 @@ Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 </IfModule>
 
-<IfModule mod_headers.c>
-    <FilesMatch "\.(jpg|jpeg|png|gif|swf|svg|webp|mp4|mkv|woff|ttf|otf|woff2)$">
-        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-        # Header set Pragma "no-cache"
-        Header set Cache-Control "public, no-cache, must-revalidate"
-        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
-        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
-    </FilesMatch>
-    <FilesMatch "\.(js|css|swf|html)$">
-        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-        # Header set Pragma "no-cache"
-        Header set Cache-Control "public, no-cache, must-revalidate"
-        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
-        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
-    </FilesMatch>
-    <FilesMatch "\.(php|json)$">
-        # Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-        # Header set Pragma "no-cache"
-        # RequestHeader unset If-Modified-Since
-        Header set Cache-Control "private, no-store, no-cache, must-revalidate"
-        SetEnvIf Origin "http(s)?://(.*\.)?(tuneout.in)$" AccessControlAllowOrigin=$0
-        Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
-    </FilesMatch>
-    Header unset ETag
-    Header unset Pragma
-    RequestHeader unset Pragma
-</IfModule>
 
 FileETag None
 
@@ -54,16 +27,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule api\/([^\?]+)\??(.*)$ api/v1/api.php?url=$1&$2 [L,QSA,NC]
 
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule ([^\/]+)\/admin\/([^\?]+)\??(.*)$ $1/admin/index.php?url=$2&$3 [L,QSA,NC]
-#
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule admin\/([^\?]+)\??(.*)$ v1/admin/index.php?url=$1&$2 [L,QSA,NC]
-#
-#errorDocument 400 https://www.dely.in/
-#errorDocument 401 https://www.dely.in/
-#errorDocument 403 https://www.dely.in/
-#errorDocument 404 https://www.dely.in/
-#errorDocument 500 https://www.dely.in/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule (.*)$ $1.html [L,QSA,NC]

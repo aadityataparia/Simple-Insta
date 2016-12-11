@@ -73,7 +73,7 @@
       LIMIT 1';
       $stmt = $this->conn->prepare($select);
       $stmt->execute(array('photoid' => $this->request['photoid']));
-      $this->outputPHP['results']['comments'] = $stmt->fetchAll();
+      $this->outputPHP['results']['photo']['comments'] = $stmt->fetchAll();
       break;
   }
   if (isset($stmt)) {

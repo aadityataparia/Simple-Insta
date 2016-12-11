@@ -1,0 +1,221 @@
+/*
+  Simplest grid
+  Author - Aaditya Taparia
+*/
+body:before {
+  content: "s";
+  display: none;
+}
+[class^='grid'], [class^='l-'], [class^='m-'], [class^='ml-'], [class^='s-'], [class*=' grid'], [class*=' l-'], [class*=' m-'], [class*=' ml-'], [class*=' s-'], .grid:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    width: auto;
+    min-height: 1px;
+}
+.grid {
+    width: 100%;
+    margin: 0 auto;
+}
+.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.grid + *{
+  clear: both;
+}
+.pad-10{
+  padding: 10px;
+}
+.mar-10{
+  margin: 10px;
+}
+/* Small Columns (for mobiles) */
+.s-1 {
+    width: 8.33%;
+}
+.s-2 {
+    width: 16.66%;
+}
+.s-3 {
+    width: 25%;
+}
+.s-4 {
+    width: 33.33%;
+}
+.s-5 {
+    width: 41.66%;
+}
+.s-6 {
+    width: 50%;
+}
+.s-7 {
+    width: 58.33%;
+}
+.s-8 {
+    width: 66.66%;
+}
+.s-9 {
+    width: 75%;
+}
+.s-10 {
+    width: 83.33%;
+}
+.s-11 {
+    width: 91.66%;
+}
+.s-12 {
+    width: 100%;
+}
+.show-on-m, .show-on-l, .show-on-ml {
+    display: none;
+}
+
+@media screen and (min-width: 421px) {
+    /* Medium Columns (for tablets) */
+    body:before {
+      content: "m";
+    }
+    .m-1 {
+        width: 8.33%;
+    }
+    .m-2 {
+        width: 16.66%;
+    }
+    .m-3 {
+        width: 25%;
+    }
+    .m-4 {
+        width: 33.33%;
+    }
+    .m-5 {
+        width: 41.66%;
+    }
+    .m-6 {
+        width: 50%;
+    }
+    .m-7 {
+        width: 58.33%;
+    }
+    .m-8 {
+        width: 66.66%;
+    }
+    .m-9 {
+        width: 75%;
+    }
+    .m-10 {
+        width: 83.33%;
+    }
+    .m-11 {
+        width: 91.66%;
+    }
+    .m-12 {
+        width: 100%;
+    }
+    .show-on-m {
+        display: block;
+    }
+    .hide-on-m, .m-0{
+      display: none !important;
+    }
+}
+
+@media screen and (min-width: 821px) {
+    /* Large Columns (use for desktops) */
+    body:before {
+      content: "ml";
+    }
+    .ml-1 {
+        width: 8.33%;
+    }
+    .ml-2 {
+        width: 16.66%;
+    }
+    .ml-3 {
+        width: 25%;
+    }
+    .ml-4 {
+        width: 33.33%;
+    }
+    .ml-5 {
+        width: 41.66%;
+    }
+    .ml-6 {
+        width: 50%;
+    }
+    .ml-7 {
+        width: 58.33%;
+    }
+    .ml-8 {
+        width: 66.66%;
+    }
+    .ml-9 {
+        width: 75%;
+    }
+    .ml-10 {
+        width: 83.33%;
+    }
+    .ml-11 {
+        width: 91.66%;
+    }
+    .ml-12 {
+        width: 100%;
+    }
+    .show-on-ml {
+        display: block;
+    }
+    .hide-on-ml, .ml-0 {
+      display: none !important;
+    }
+}
+
+@media screen and (min-width: 1221px) {
+    /* Large Columns (use for desktops) */
+    body:before {
+      content: "l";
+    }
+    .l-1 {
+        width: 8.33%;
+    }
+    .l-2 {
+        width: 16.66%;
+    }
+    .l-3 {
+        width: 25%;
+    }
+    .l-4 {
+        width: 33.33%;
+    }
+    .l-5 {
+        width: 41.66%;
+    }
+    .l-6 {
+        width: 50%;
+    }
+    .l-7 {
+        width: 58.33%;
+    }
+    .l-8 {
+        width: 66.66%;
+    }
+    .l-9 {
+        width: 75%;
+    }
+    .l-10 {
+        width: 83.33%;
+    }
+    .l-11 {
+        width: 91.66%;
+    }
+    .l-12 {
+        width: 100%;
+    }
+    .show-on-l {
+        display: block;
+    }
+    .hide-on-l, .l-0{
+      display: none !important;
+    }
+}
