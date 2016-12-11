@@ -12,7 +12,7 @@ switch ($this->data[0]) {
     $id = $this->conn->lastInsertId();
     $this->outputPHP['deleted_id'] = $id;
     $path = "./uploads/";
-    $dst = $path . 'photos/' . $id . '.jpg';
+    $dst = $path . 'photos/' . $this->request['photoid'] . '.jpg';
     unlink($dst);
     break;
   case 'comment':
