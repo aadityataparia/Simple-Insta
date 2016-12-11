@@ -708,7 +708,7 @@ function emailLogin(email) {
   }, function(res) {
     removeClass(MAIN, "loginfs");
     if (res.status == 200 && res.emailsent) {
-      notify("Magic Code and Link sent to " + email + ". Do check Spam folder if it is not in your Inbox.");
+      notify("Magic Code sent to " + email + ". Do check Spam folder if it is not in your Inbox.");
       addClass(MAIN, "verify");
       Buser.email = email;
       user.email = email;
