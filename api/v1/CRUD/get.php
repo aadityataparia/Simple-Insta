@@ -78,7 +78,8 @@
         comments
         INNER JOIN users ON users.id = comments.userid
       WHERE
-        comments.photoid = :photoid AND comments.deleted = 0';
+        comments.photoid = :photoid AND comments.deleted = 0
+      ORDER BY comments.id ASC';
       $stmt = $this->conn->prepare($select);
       $stmt->execute(array('photoid' => $this->request['photoid']));
       $this->outputPHP['results'][0]['comments'] = $stmt->fetchAll();
