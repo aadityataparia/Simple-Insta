@@ -432,6 +432,15 @@ function labelClick(elem) {
   var i = children(elem.parentElement, 'input')[0] || children(elem.parentElement, 'textarea')[0];
   i.focus();
 }
+//input
+window.addEventListener("change", function(e) {
+  winChange(e.target)
+});
+function winChange(target) {
+  if (target.matches("input") || target.matches("textarea")) {
+    target.setAttribute('value', target.value);
+  }
+}
 //data binding
 var bR = {
   html: function(selector, value, container) {
@@ -749,9 +758,47 @@ var Buser = {
 //feed Binding
 var Bfeed = {
   set photos(value) {
-
+    var html = "", comments = "", deleteuser="";
+    forEach(value, function(photo, key){
+      if(photo.comments){
+        forEach(photo.comments, function(comment){
+          if(comment.userid == user.id){
+            deleteuser = '<span class="right deletec" data-commentid="'+comment.id+'">X</span>';
+          } else {
+            deleteuser = "";
+          }
+          comments += '<p class="comment">' +
+            '<span>'+comment.email+'</span>' + comment.comment + deleteuser +
+          '</p>';
+        });
+      }
+      if(photo.userid == user.id){
+        deleteuser = '<div class="button s-4 m-3 red" onclick="deletePhoto('+photo.id+',event.target)">' +
+          '<span>Delete</button>' +
+        '</div>';
+      } else {
+        deleteuser = "";
+      }
+      html += '<div class="photo grid" data-photoid="'+photo.id+'">' +
+        '<div class="about s-12">' +
+          '<div class="username s-8 m-9">'+photo.email+'</div>' +
+           deleteuser +
+        '</div>' +
+        '<a href="./photo?id='+photo.id+'"><img class="fit" src="./api/v1/uploads/photos/'+photo.id+'.jpg" title="'+photo.email+'\'s photo" alt="'+photo.email+'\'s photo"></a>' +
+        '<div class="comments">' +
+          comments +
+        '</div>' +
+        '<form class="input" onsubmit="commentP('+photo.id+',this.comment.value,event.target); return false;">' +
+          '<input type="text" name="comment" value="" required autocomplete="off">' +
+          '<label for="comment">Comment</label>' +
+          '<p>Press enter to comment.</p>' +
+        '</form>' +
+      '</div>';
+    });
+    bR.html("feed",html);
   }
 }
+
 //upload photo
 document.querySelector("#uploadpic input").addEventListener("change", function() {
   var file = this.files[0];
@@ -768,7 +815,6 @@ document.querySelector("#uploadpic input").addEventListener("change", function()
     if (res.status == 200) {
       notify("Image uploaded successfully", "green");
       // window.location = "./photo/"+res.results.photo.id;
-      console.log(res.results.photo.id);
     } else if (res.status == 1000) {
       notify(res.customerror, "red");
     } else {
@@ -827,7 +873,7 @@ function commentP(photoid, comment, target){
     photoid: photoid
   }, function(res) {
     if (res.status == 200) {
-      target.parentElement.querySelector(".comments").innerHTML += '<p class="comment"><span>'+user.email+'</span>'+comment+'</p>';
+      target.parentElement.querySelector(".comments").innerHTML += '<p class="comment"><span>'+user.email+'</span>'+comment+ '<span class="right deletec" data-commentid="'+res.inserted_id+'">X</span>' +'</p>';
       target.parentElement.querySelector(".input input").value = "";
     }
   });
@@ -842,6 +888,55 @@ function deletePhoto(photoid, target){
     if (res.status == 200) {
       addClass(target.parentElement.parentElement.parentElement,"deleted")
       notify("Photo successfully deleted");
+    }
+  });
+}
+
+//different feed for different url
+if (path[path.length-1].toLowerCase() == 'myphotos') {
+  API.get("./api/v1/api.php", {
+    url: "myphotos",
+    from: 0
+  }, function(res) {
+    if (res.status == 200) {
+      user.id = res.userid;
+      Bfeed.photos = res.results;
+    }
+  });
+} else if(path[path.length-1].toLowerCase() == 'photo'){
+  var photoid = qs.id;
+  API.get("./api/v1/api.php", {
+    url: "photo",
+    photoid: photoid
+  }, function(res) {
+    if (res.status == 200) {
+      user.id = res.userid;
+      Bfeed.photos = res.results;
+    }
+  });
+} else {
+  API.get("./api/v1/api.php", {
+    url: "feed",
+    from: 0
+  }, function(res) {
+    if (res.status == 200) {
+      user.id = res.userid;
+      Bfeed.photos = res.results;
+    }
+  });
+}
+
+//delete comment
+CLICK_EVENTS['.deletec'] = "deleteComment";
+function deleteComment(elem){
+  var commentid = elem.getAttribute("data-commentid");
+  API.delete("./api/v1/api.php", {
+    url: "comment",
+    commentid: commentid
+  }, function(res) {
+    if (res.status == 200) {
+      addClass(elem.parentElement,"deleted")
+      notify("Comment successfully deleted");
     }
   });
 }

@@ -15,7 +15,7 @@
         <div class="wrapper">
           <div class="middle">
             <div class="logo-c" id="logomain">
-              <a href="/">
+              <a href="./">
                 ATcookpad
               </a>
             </div>
@@ -30,7 +30,7 @@
             <span class="show-on-m right" id="username" db-value="user.email" style="max-width: 100px"></span>
             <div class="amenu">
               <div class="small">
-                <a class="logged" href="/myphotos">My Photos</a>
+                <a class="logged" href="./myphotos">My Photos</a>
                 <a class="logged" onclick="logout()">Logout</a>
               </div>
             </div>
@@ -137,7 +137,7 @@
           </div>
           <form class="s-12" onsubmit="changePass(this.password.value); return false;">
             <div class="input s-12" id="password">
-              <input type="text" name="password" value="" maxlength="15" required>
+              <input type="password" name="password" value="" maxlength="15" required>
               <label for="password">Type Password</label>
             </div>
             <div class="s-6 button green">
@@ -147,36 +147,7 @@
         </div>
       </div>
     </div>
-    <div class="feed" db-value="feed">
-      <div class="photo grid" data-photoid="10">
-        <div class="about s-12">
-          <div class="username s-8 m-9">aadityataparia</div>
-          <div class="button s-4 m-3 red" onclick="deletePhoto(10,event.target)">
-            <span>Delete</button>
-          </div>
-        </div>
-        <img class="fit" src="https://home.tuneout.in/cookpad/api/v1/uploads/photos/10.jpg" alt="10">
-        <div class="comments">
-          <p class="comment">
-            <span>aadityataparia</span>
-            Whatever the fuck I want to say
-          </p>
-          <p class="comment">
-            <span>aadityataparia</span>
-            Whatever the fuck I want to say
-          </p>
-          <p class="comment">
-            <span>aadityataparia</span>
-            Whatever the fuck I want to say
-          </p>
-        </div>
-        <form class="input" onsubmit="commentP(10,this.comment.value,event.target); return false;">
-          <input type="text" name="comment" value="" required>
-          <label for="comment">Comment</label>
-          <p>Press enter to comment.</p>
-        </form>
-      </div>
-    </div>
+    <div class="feed" db-value="feed">LOADING...</div>
     <script type="text/javascript" src="./localforage.min.js"></script>
     <script type="text/javascript" src="./index.js"></script>
   </body>

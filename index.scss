@@ -94,6 +94,7 @@ a {
 
 .input {
     position: relative;
+    padding: 7px 4px;
     input {
         font-size: 12px;
         padding: 8px 4px;
@@ -107,7 +108,8 @@ a {
 
         &.populated,
         &:focus,
-        &:valid {
+        &:valid,
+        &:not([value=""]) {
             padding-top: 14px;
             padding-bottom: 2px;
 
@@ -717,12 +719,14 @@ body.verify {
 
 .feed {
     width: 100%;
+    padding: 15px;
     max-width: 700px;
     margin: 46px auto;
 
     .photo {
         border: 1px solid #aaa;
         border-radius: 3px;
+        margin: 7.5px 0;
         &.deleted{
           display: none;
         }
@@ -732,6 +736,7 @@ body.verify {
         font-size: 20px;
         padding: 6px;
         margin: 7px 0;
+        font-weight: 700;
     }
 
     .comments {
@@ -743,6 +748,10 @@ body.verify {
             span {
                 font-weight: 700;
                 margin-right: 2px;
+                cursor: pointer;
+            }
+            &.deleted{
+              display: none;
             }
         }
 
@@ -753,8 +762,6 @@ body.verify {
 
     .input {
         border-top: 1px solid #ccc;
-        padding: 7px 4px;
-
         p {
             font-size: 14px;
             padding: 2px;

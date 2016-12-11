@@ -7,14 +7,16 @@
       } else {
         $from = 0;
       }
-      $select = "SELECT *
+      $select = "SELECT photos.*, users.email
       FROM photos
+      INNER JOIN users ON users.id = photos.userid
       WHERE deleted = 0
+      ORDER BY id DESC
       LIMIT ".$from.",10";
       $stmt = $this->conn->prepare($select);
       $stmt->execute();
-      $this->outputPHP['results']['photos'] = $stmt->fetchAll();
-      if(sizeof($this->outputPHP['results']['photos']) < 10){
+      $this->outputPHP['results'] = $stmt->fetchAll();
+      if(sizeof($this->outputPHP['results']) < 10){
         $this->outputPHP['more'] = false;
       } else {
         $this->outputPHP['more'] = true;
@@ -34,13 +36,20 @@
       break;
     case 'myphotos':
       if(isset($userID1) && is_numeric($userID1)) {
-        $select = "SELECT *
+        if(isset($this->request['from'])){
+          $from = $this->request['from'];
+        } else {
+          $from = 0;
+        }
+        $select = "SELECT photos.*, users.email
         FROM photos
-        LIMIT ".$from.",10
-        WHERE userid = :userid AND deleted = 0";
+        INNER JOIN users ON users.id = photos.userid
+        WHERE photos.userid = :userid AND photos.deleted = 0
+        ORDER BY id DESC
+        LIMIT ".$from.",10";
         $stmt = $this->conn->prepare($select);
         $stmt->execute(array("userid"=>$userID1));
-        $this->outputPHP['results']['myphotos'] = $stmt->fetchAll();
+        $this->outputPHP['results'] = $stmt->fetchAll();
       } else {
         $this->gotError(401);
       }
@@ -53,27 +62,26 @@
         $this->gotError(206);
         return false;
       }
-      $select = 'SELECT
-       *
+      $select = 'SELECT photos.*, users.email
       FROM
         photos
+      INNER JOIN users ON users.id = photos.userid
       WHERE
-        id = :photoid AND deleted = 0
+        photos.id = :photoid AND photos.deleted = 0
       LIMIT 1';
       $stmt = $this->conn->prepare($select);
       $stmt->execute(array('photoid' => $this->request['photoid']));
-      $this->outputPHP['results']['photo'] = $stmt->fetch();
+      $this->outputPHP['results'] = $stmt->fetchAll();
 
-      $select = 'SELECT
-       *
+      $select = 'SELECT comments.*, users.email
       FROM
         comments
+        INNER JOIN users ON users.id = comments.userid
       WHERE
-        photoid = :photoid
-      LIMIT 1';
+        comments.photoid = :photoid AND comments.deleted = 0';
       $stmt = $this->conn->prepare($select);
       $stmt->execute(array('photoid' => $this->request['photoid']));
-      $this->outputPHP['results']['photo']['comments'] = $stmt->fetchAll();
+      $this->outputPHP['results'][0]['comments'] = $stmt->fetchAll();
       break;
   }
   if (isset($stmt)) {
