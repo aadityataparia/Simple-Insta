@@ -915,6 +915,7 @@ if (path[path.length-1].toLowerCase() == 'myphotos') {
     }
   });
 } else {
+  addClass(MAIN,"feed");
   API.get("./api/v1/api.php", {
     url: "feed",
     from: 0
