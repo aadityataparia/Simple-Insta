@@ -9,4 +9,4 @@ Your application must implement at least the following user stories:
 - As a signed in user, I can upload an image
 - As a signed in users, I can delete an image that I uploaded
 
-Live example at - https://home.tuneout.in/cookpad/
+Live example at - https://home.tuneout.in/cookpad/ (NOT WORKING NOW)
