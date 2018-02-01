@@ -9,4 +9,9 @@ Your application must implement at least the following user stories:
 - As a signed in user, I can upload an image
 - As a signed in users, I can delete an image that I uploaded
 
-Live example at - https://home.tuneout.in/cookpad/ (NOT WORKING NOW)
+# Host on your own server with PHP language, MySQL server
+- fork it
+- host it
+- create required database and tables
+- update database url
+- you are good to go
