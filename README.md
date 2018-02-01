@@ -7,6 +7,6 @@
 
 # Host on your own server with PHP language, MySQL server
 - fork it
-- create required database and tables
+- create required database and tables (or simply use simple-insta.sql)
 - update database url in api/vi/config.php
 - host it and you are good to go
