@@ -11,7 +11,6 @@ Your application must implement at least the following user stories:
 
 # Host on your own server with PHP language, MySQL server
 - fork it
-- host it
 - create required database and tables
-- update database url
-- you are good to go
+- update database url in api/vi/config.php
+- host it and you are good to go
