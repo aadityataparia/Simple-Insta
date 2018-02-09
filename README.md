@@ -1,4 +1,6 @@
 # Simple Insta Features
+Simple Instagram clone with basic features
+Build as a side project, to have a personal instagram for our friend circle
 - Home Feed with all images from all users
 - As a user, I can register an account, sign in, and sign out
 - As a signed in user, I can upload an image
@@ -8,7 +10,7 @@
 
 # Host on your own server with PHP language, MySQL server
 - fork it
-- create required database and tables (or simply use `simple-insta.sql`) on your mySQL server, it's better to use a new user with access to only this database.
+- create required database and tables (or simply import `simple-insta.sql` to your mysql server) on your mySQL server, it's better to use a new user with access to only this database.
 - update database host url, database name, username and password in `/api/vi/config.php` (remove .template from filename)
 - make sure `/api/v1/uploads` has public write access (`chmod 666`)
 - make sure `/api/vi/config.php` has owner read-write, group read, public deny access (`chmod 640`)
