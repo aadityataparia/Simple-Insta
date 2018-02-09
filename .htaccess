@@ -1,5 +1,4 @@
 RewriteEngine On
-RewriteBase /cookpad/
 
 Options +FollowSymLinks -MultiViews -Indexes
 
@@ -16,21 +15,20 @@ Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 </IfModule>
 
-
 FileETag None
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule auth\/([^\?]+)\??(.*)$ api/v1/auth/index.php?url=$1&$2 [L,QSA,NC]
+RewriteRule /auth\/([^\?]+)\??(.*)$ api/v1/auth/index.php?url=$1&$2 [L,QSA,NC]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule api\/([^\?]+)\??(.*)$ api/v1/api.php?url=$1&$2 [L,QSA,NC]
+RewriteRule /api\/([^\?]+)\??(.*)$ api/v1/api.php?url=$1&$2 [L,QSA,NC]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^myphotos index.html [L,QSA,NC]
+RewriteRule /myphotos index.html [L,QSA,NC]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^photo?(.*)? index.html?id=$1 [L,QSA,NC]
+RewriteRule /photo?(.*)? index.html?id=$1 [L,QSA,NC]
