@@ -1,154 +1,157 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
-    <meta charset="utf-8">
-    <title>ATcookpad</title>
-    <link rel="canonical" href="https://www.tuneout.in/"/>
-    <link href="./at-grid-min.css" rel="stylesheet">
-    <link href="./index.min.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="header-w">
-      <div id="notification"></div>
-      <header>
-        <div class="wrapper">
-          <div class="middle">
-            <div class="logo-c" id="logomain">
-              <a href="./">
-                ATcookpad
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Simple-Insta</title>
+  <link rel="canonical" href="https://www.tuneout.in/" />
+  <link href="./at-grid-min.css" rel="stylesheet">
+  <link href="./index.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="header-w">
+    <div id="notification"></div>
+    <header>
+      <div class="wrapper">
+        <div class="middle">
+          <div class="logo-c" id="logomain">
+            <a href="./">
+                Simple-Insta
               </a>
-            </div>
           </div>
-          <div class="set right not-logged showfi" data-show="userlogin" onclick="removeClass(document.body,'loginfs')">
-            <span class="right">Signup</span>
-          </div>
-          <div class="set right not-logged showfi show-on-m" data-show="userlogin" onclick="addClass(document.body,'loginfs')">
-            <span class="right">Login</span>
-          </div>
-          <div class="logged set right" id="prohover">
-            <span class="right" id="username" db-value="user.email" style="max-width: 100px"></span>
-            <div class="amenu">
-              <div class="small">
-                <a class="logged" href="./myphotos">My Photos</a>
-                <a class="logged" onclick="logout()">Logout</a>
-              </div>
-            </div>
-          </div>
-          <a class="set right choosepic logged">
-            <form id="uploadpic">
-              <input type="file" name="photoimg" id="photoimg" accept="image/*">
-              <label for="photoimg">Upload</label>
-            </form>
-          </a>
         </div>
-      </header>
-      <div class="loader"></div>
-      <div class="progress">
-        <div class="loading"></div>
-        <div class="percent"></div>
-      </div>
-      <div class="fixedinput" id="userlogin">
-        <div class="bkg"></div>
-        <div class="cont centered s-10" style="padding: 0">
-          <div class="close">
-            <div class="sw cross noselect">
-              <span class="menu1"></span>
-              <span class="menu2"></span>
-              <span class="menu3"></span>
-              <span class="menu4"></span>
+        <div class="set right not-logged showfi" data-show="userlogin" onclick="removeClass(document.body,'loginfs')">
+          <span class="right">Signup</span>
+        </div>
+        <div class="set right not-logged showfi show-on-m" data-show="userlogin" onclick="addClass(document.body,'loginfs')">
+          <span class="right">Login</span>
+        </div>
+        <div class="logged set right" id="prohover">
+          <span class="right" id="username" db-value="user.email" style="max-width: 100px"></span>
+          <div class="amenu">
+            <div class="small">
+              <a class="logged" href="./myphotos">My Photos</a>
+              <a class="logged" onclick="logout()">Logout</a>
             </div>
           </div>
-          <div class="head su grid" onclick="removeClass(document.body, 'loginfs')">
-            <a class="left verify white" onclick="removeClass(document.body, 'verify')">
-              <h3>
-                &lt;</h3>
-            </a>
-            Signup
+        </div>
+        <a class="set right choosepic logged">
+          <form id="uploadpic">
+            <input type="file" name="photoimg" id="photoimg" accept="image/*">
+            <label for="photoimg">Upload</label>
+          </form>
+        </a>
+      </div>
+    </header>
+    <div class="loader"></div>
+    <div class="progress">
+      <div class="loading"></div>
+      <div class="percent"></div>
+    </div>
+    <div class="fixedinput" id="userlogin">
+      <div class="bkg"></div>
+      <div class="cont centered s-10" style="padding: 0">
+        <div class="close">
+          <div class="sw cross noselect">
+            <span class="menu1"></span>
+            <span class="menu2"></span>
+            <span class="menu3"></span>
+            <span class="menu4"></span>
           </div>
-          <div class="wrap signup-f contin">
-            <div class="login-email not-logged">
-              <h4>
+        </div>
+        <div class="head su grid" onclick="removeClass(document.body, 'loginfs')">
+          <a class="left verify white" onclick="removeClass(document.body, 'verify')">
+            <h3>
+                &lt;</h3>
+          </a>
+          Signup
+        </div>
+        <div class="wrap signup-f contin">
+          <div class="login-email not-logged">
+            <h4>
                 Enter your Email-ID to Signup
               </h4><br>
-              <form class="grid" onsubmit="emailLogin(this.email.value); return false;">
-                <div class="s-10 input">
-                  <input class="l-email" type="email" name="email" value="" required autofocus>
-                  <label for="email">Email-ID</label>
-                </div>
-                <div class="s-7 button green">
-                  <input class="l-submit" type="submit" name="submit" value="Send Magic Link">
-                </div>
-              </form>
-            </div>
-            <div class="magic-token not-logged">
-              <h4>
-                Magic Code sent to your Email-ID. Copy paste Magic code here to Login to ATcookpad and confirm your Email address.
-              </h4><br>
-              <form class="grid" onsubmit="verifyEmail(this.token.value, this.email.value); return false;" id="mlverify">
-                <input class="l-email" type="hidden" name="email" value="" placeholder="Email-ID" db-value="user.email">
-                <div class="s-10 input">
-                  <input type="text" name="token" value="" required>
-                  <label for="token">Magic Code</label>
-                </div>
-                <div class="s-7 button green">
-                  <input class="l-submit" type="submit" name="submit" value="Verify">
-                </div>
-                <div class="s-7 button green" onclick="emailLogin(document.getElementById('mlverify').email.value); return false;">
-                  <input class="" type="resend" name="resend" value="Resend Code">
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="head li grid" onclick="addClass(document.body, 'loginfs')">
-            <span class="already">Already have an account?
-            </span>Login.
-          </div>
-          <div class="grid login-f contin">
-            <form class="grid" onsubmit="passLogin(this.email.value, this.password.value); return false;">
+            <form class="grid" onsubmit="emailLogin(this.email.value); return false;">
               <div class="s-10 input">
-                <input class="l-email" type="email" name="email" value="" required>
+                <input class="l-email" type="email" name="email" value="" required autofocus>
                 <label for="email">Email-ID</label>
               </div>
-              <div class="input s-10">
-                <input class="s-12 password" pattern=".{5,15}" type="password" name="password" value="" required>
-                <label for="password">Password</label>
+              <div class="s-7 button green">
+                <input class="l-submit" type="submit" name="submit" value="Send Magic Link">
+              </div>
+            </form>
+          </div>
+          <div class="magic-token not-logged">
+            <h4>
+                Magic Code sent to your Email-ID. Copy paste Magic code here to Login to ATcookpad and confirm your Email address.
+              </h4><br>
+            <form class="grid" onsubmit="verifyEmail(this.token.value, this.email.value); return false;" id="mlverify">
+              <input class="l-email" type="hidden" name="email" value="" placeholder="Email-ID" db-value="user.email">
+              <div class="s-10 input">
+                <input type="text" name="token" value="" required>
+                <label for="token">Magic Code</label>
               </div>
               <div class="s-7 button green">
-                <input class="l-submit" type="submit" name="submit" value="Login">
+                <input class="l-submit" type="submit" name="submit" value="Verify">
+              </div>
+              <div class="s-7 button green" onclick="emailLogin(document.getElementById('mlverify').email.value); return false;">
+                <input class="" type="resend" name="resend" value="Resend Code">
               </div>
             </form>
           </div>
         </div>
-      </div>
-      <div class="fixedinput" id="setpass">
-        <div class="bkg"></div>
-        <div class="cont centered s-10" style="padding: 0">
-          <div class="close">
-            <div class="sw cross noselect">
-              <span class="menu1"></span>
-              <span class="menu2"></span>
-              <span class="menu3"></span>
-              <span class="menu4"></span>
+        <div class="head li grid" onclick="addClass(document.body, 'loginfs')">
+          <span class="already">Already have an account?
+            </span>Login.
+        </div>
+        <div class="grid login-f contin">
+          <form class="grid" onsubmit="passLogin(this.email.value, this.password.value); return false;">
+            <div class="s-10 input">
+              <input class="l-email" type="email" name="email" value="" required>
+              <label for="email">Email-ID</label>
             </div>
-          </div>
-          <div class="head grid">
-            Set your Password
-          </div>
-          <form class="s-12" onsubmit="changePass(this.password.value); return false;">
-            <div class="input s-12" id="password">
-              <input type="password" name="password" value="" maxlength="15" required>
-              <label for="password">Type Password</label>
+            <div class="input s-10">
+              <input class="s-12 password" pattern=".{5,15}" type="password" name="password" value="" required>
+              <label for="password">Password</label>
             </div>
-            <div class="s-6 button green">
-              <input class="l-submit" type="submit" name="passsub" value="Set Password">
+            <div class="s-7 button green">
+              <input class="l-submit" type="submit" name="submit" value="Login">
             </div>
           </form>
         </div>
       </div>
     </div>
-    <div class="feed" db-value="feed">LOADING...</div>
-    <script type="text/javascript" src="./localforage.min.js"></script>
-    <script type="text/javascript" src="./index.js"></script>
-  </body>
+    <div class="fixedinput" id="setpass">
+      <div class="bkg"></div>
+      <div class="cont centered s-10" style="padding: 0">
+        <div class="close">
+          <div class="sw cross noselect">
+            <span class="menu1"></span>
+            <span class="menu2"></span>
+            <span class="menu3"></span>
+            <span class="menu4"></span>
+          </div>
+        </div>
+        <div class="head grid">
+          Set your Password
+        </div>
+        <form class="s-12" onsubmit="changePass(this.password.value); return false;">
+          <div class="input s-12" id="password">
+            <input type="password" name="password" value="" maxlength="15" required>
+            <label for="password">Type Password</label>
+          </div>
+          <div class="s-6 button green">
+            <input class="l-submit" type="submit" name="passsub" value="Set Password">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="feed" db-value="feed">LOADING...</div>
+  <script type="text/javascript" src="./localforage.min.js"></script>
+  <script type="text/javascript" src="./index.js"></script>
+</body>
+
 </html>

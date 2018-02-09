@@ -52,7 +52,7 @@ $message = "This is a MIME encoded message.";
 $message .= "\r\n\r\n--" . $boundary . "\r\n";
 $message .= "Content-Type: text/plain;charset=utf-8\r\n\r\n";
 $text = "Hello!
-You asked us to send you a magic code for quickly signingin to ATCookpad.
+You asked us to send you a magic code for quickly signingin to Simple-Insta.
 
 Copy/paste this magic code where asked: ".$code."
 Note: Your magic link will expire in 24 hours, and can only be used one time.";
@@ -60,7 +60,7 @@ $message .= $text;
 $message .= "\r\n\r\n--" . $boundary . "\r\n";
 $message .= 'Content-Type: text/html charset=utf-8'."\r\n";
 //Html body
-$html = '<p><span class="im" style="color: rgb(80, 0, 80); font-family: arial, sans-serif; font-size: 12.8px;">You asked us to send you a magic code for signingin to ATCookpad.</span></p>
+$html = '<p><span class="im" style="color: rgb(80, 0, 80); font-family: arial, sans-serif; font-size: 12.8px;">You asked us to send you a magic code for signingin to Simple-Insta.</span></p>
 
 <p style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 12.8px;"><span class="im" style="color: rgb(80, 0, 80);">Copy/paste this magic code where asked:&nbsp;<strong>'.$code.'</strong><br />
 Note: Your magic link will expire in 24 hours, and can only be used one time.</span></p>';
