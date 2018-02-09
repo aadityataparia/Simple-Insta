@@ -57,6 +57,7 @@ self.addEventListener('fetch', event => {
         event.respondWith(fromNetwork(request, 1000));
         return;
       }
+
       event.respondWith(fromNetwork(request, 1000).catch(function () {
         return fromCache(request);
       }));
@@ -73,7 +74,7 @@ function precache(urls) {
 function fromCache(request) {
   return caches.open(CACHE).then(function (cache) {
     return cache.match(request).then(function (matching) {
-      return matching || Promise.reject('no-match');
+      return matching || fromNetwork(request, 10000);
     });
   });
 }
