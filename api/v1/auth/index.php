@@ -2,7 +2,13 @@
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+function errorHandler($errno, $errstr) {
+  if (isset($rest)){
+    $rest->addtoPHP('php_error', "Error: [$errno] $errstr");
+  }
+}
+set_error_handler("errorHandler");
 
 $http_origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : 'abc';
 
