@@ -57,7 +57,6 @@ self.addEventListener('fetch', event => {
         event.respondWith(fromNetwork(request, 1000));
         return;
       }
-
       event.respondWith(fromNetwork(request, 1000).catch(function () {
         return fromCache(request);
       }));
