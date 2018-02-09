@@ -7,6 +7,7 @@ Build as a side project, to have a personal instagram for our friend circle
 - As a signed in users, I can delete an image that I uploaded
 - As a signed in user I can comment on images and delete my comments.
 - One page website, uses REST API for database queries.
+- Works Offline (using service worker).
 
 # Host on your own server with PHP language, MySQL server
 - **Note**: This website is meant to be hosted on apache web server with `AllOverride All` setting to make redirects work.
