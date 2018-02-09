@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `atcookpad`
 --
-CREATE DATABASE IF NOT EXISTS `simple-insta` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `simple-insta`;
+CREATE DATABASE IF NOT EXISTS `insta` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `insta`;
 
 -- --------------------------------------------------------
 

@@ -4,5 +4,5 @@
  */
 $db_host = "localhost";
 $db_user = "insta";
-$db_pass = "u9okD/osG7LH";
+$db_pass = "password";
 $db_name = "insta";

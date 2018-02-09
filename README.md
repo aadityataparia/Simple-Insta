@@ -8,6 +8,8 @@
 
 # Host on your own server with PHP language, MySQL server
 - fork it
-- create required database and tables (or simply use simple-insta.sql) on your mySQL server
-- update database url, username, password in api/vi/config.php
+- create required database and tables (or simply use `simple-insta.sql`) on your mySQL server, it's better to use a new user with access to only this database.
+- update database host url, database name, username and password in `/api/vi/config.php` (remove .template from filename)
+- make sure `/api/v1/uploads` has public write access (`chmod 666`)
+- make sure `/api/vi/config.php` has owner read-write, group read, public deny access (`chmod 640`)
 - host it and you are good to go
