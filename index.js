@@ -947,3 +947,10 @@ function deleteComment(elem){
     }
   });
 }
+
+// add service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
