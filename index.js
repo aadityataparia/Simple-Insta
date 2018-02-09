@@ -277,7 +277,11 @@ var API = {
     http.onload = function() {
       progress.set(100);
       if (http.status > 199 && http.status < 400) {
-        var result = JSON.parse(http.responseText);
+        try {
+          var result = JSON.parse(http.responseText);
+        } catch(err) {
+          notify("Error while executing request, try again later.", "red");
+        }
         if (result.status == "OK" || result.ok) {} else if (result.status == 401 && !user.id) {
           showAddPC(document.querySelector('[data-show="userlogin"]'));
           notify("Login and try again.", "red");
@@ -295,6 +299,7 @@ var API = {
       } else {
         if (typeof failure == "function") {
           failure(http.status);
+          notify("Error while executing request, try again later.", "red");
         }
         return false;
       }
