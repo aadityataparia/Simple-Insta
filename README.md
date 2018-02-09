@@ -9,6 +9,7 @@ Build as a side project, to have a personal instagram for our friend circle
 - One page website, uses REST API for database queries.
 
 # Host on your own server with PHP language, MySQL server
+- **Note**: This website is meant to be hosted on apache web server with `AllOverride All` setting to make redirects work.
 - fork it
 - create required database and tables (or simply import `simple-insta.sql` to your mysql server) on your mySQL server, it's better to use a new user with access to only this database.
 - update database host url, database name, username and password in `/api/vi/config.php` (remove .template from filename)
