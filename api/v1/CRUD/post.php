@@ -65,8 +65,17 @@ switch ($this->data[0]) {
     $img = $_FILES['photoimg']['tmp_name'];
     $dst = $path . 'photos/' . $id . '.jpg';
     if (($img_info = getimagesize($img)) === FALSE){
+      $update = "
+      UPDATE `photos`
+      SET deleted=1
+      WHERE id=:photoid";
+      $stmt=$this->conn->prepare($update);
+      $stmt->execute(array("photoid"=>$id));
+      $id = $this->conn->lastInsertId();
+      $this->outputPHP['deleted_id'] = $id;
       $this->gotError(1000);
       $this->outputPHP['customerror'] = "Invalid image";
+      $this->outputPHP['file'] = $img;
       return false;
     }
 
