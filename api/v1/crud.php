@@ -117,7 +117,7 @@ class RestCRUD
             $this->outputPHP['pdo_err_code'] = $error[1];
             $this->outputPHP['pdo_err_message'] = $error[2];
         } else if($count == 0 && $this->outputPHP['method'] == 'GET'){
-          $this->gotError(404);
+          $this->gotError(603);
         }
         $this->addtoPHP('count', $count);
     }

@@ -69,7 +69,8 @@ class RestUtils
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported',
             601 => 'Payment not authorized',
-            602 => 'Duplicate POST not allowed'
+            602 => 'Duplicate POST not allowed',
+            603 => 'No results'
         );
 
         return (isset($codes[$status])) ? $codes[$status] : '';

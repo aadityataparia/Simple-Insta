@@ -8,7 +8,7 @@ var CLICK_EVENTS = {};
 var SUPPORT_PASSIVE = false,
   magiclink = false;
 var lf_get = localforage.createInstance({
-  name: "APIget"
+  name: "Session"
 });
 try {
   var opts = Object.defineProperty({}, 'passive', {
@@ -261,16 +261,6 @@ var API = {
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
       }).join('&'),
       noload = false;
-    if (type == "GET") {
-      lf_get.getItem(url + '?' + ans).then(function(sp) {
-        if (typeof callback == "function" && sp && sp.ok) {
-          callback(sp);
-          lfres = sp;
-          noload = true;
-          progress.num = 100;
-        }
-      });
-    }
     var http = new XMLHttpRequest(),
       lfres;
     loader.off();
@@ -291,7 +281,6 @@ var API = {
             failure(result.status);
           }
         }
-        lf_get.setItem(url + '?' + ans, result);
         if (typeof callback == "function") {
           callback(result);
         }
@@ -323,7 +312,7 @@ var API = {
       }
     }
     params = typeof params == 'undefined' ? {} : params;
-    localforage.getItem("sessionpass").then(function(sp) {
+    lf_get.getItem("sessionpass").then(function(sp) {
       http.open(type, url + '?' + ans, true);
       if (sp) {
         http.setRequestHeader("x-session-pass", sp);
@@ -514,7 +503,7 @@ function signinuser(data) {
   if (magiclink) {
     addClass("#setpass", "show");
   }
-  localforage.getItem('sessions').then(function(value) {
+  lf_get.getItem('sessions').then(function(value) {
     logged = false;
     if (value != null) {
       forEach(value, function(session, index) {
@@ -527,20 +516,20 @@ function signinuser(data) {
       });
       if (!logged) {
         var index = value.push(datatoinput) - 1;
-        localforage.setItem('sessions', value);
-        localforage.setItem("currentuser", index);
-        localforage.setItem("sessionpass", sessionpass);
+        lf_get.setItem('sessions', value);
+        lf_get.setItem("currentuser", index);
+        lf_get.setItem("sessionpass", sessionpass);
       } else {
-        localforage.setItem('sessions', value);
-        localforage.setItem("currentuser", yes);
-        localforage.setItem("sessionpass", sessionpass);
+        lf_get.setItem('sessions', value);
+        lf_get.setItem("currentuser", yes);
+        lf_get.setItem("sessionpass", sessionpass);
       }
     } else {
       var value = [];
       value.push(datatoinput);
-      localforage.setItem('sessions', value);
-      localforage.setItem("currentuser", 0);
-      localforage.setItem("sessionpass", sessionpass);
+      lf_get.setItem('sessions', value);
+      lf_get.setItem("currentuser", 0);
+      lf_get.setItem("sessionpass", sessionpass);
     }
   }).catch(function(err) {
     console.log(err);
@@ -550,9 +539,9 @@ function signinuser(data) {
 window.onload = function() {
   loader.off();
 }
-localforage.getItem("currentuser").then(function(c) {
+lf_get.getItem("currentuser").then(function(c) {
   if (c !== null) {
-    localforage.getItem("sessions").then(function(sessions) {
+    lf_get.getItem("sessions").then(function(sessions) {
       signinuser({
         sessionpass: sessions[c].sessionpass,
         results: [sessions[c].user]
@@ -617,7 +606,7 @@ function loggedin(nocheck) {
     elem.style.display = 'none';
   });
   if (!nocheck || nocheck == undefined) {
-    localforage.getItem("sessionpass").then(function(val) {
+    lf_get.getItem("sessionpass").then(function(val) {
       if (val === null) {
         logout();
       }
@@ -644,9 +633,9 @@ function passLogin(email, pass) {
 //logout
 function logout() {
   logged = false;
-  localforage.removeItem('sessions');
-  localforage.removeItem('sessionpass');
-  localforage.removeItem('currentuser');
+  lf_get.removeItem('sessions');
+  lf_get.removeItem('sessionpass');
+  lf_get.removeItem('currentuser');
   forEach(document.querySelectorAll(".logged"), function(elem) {
     elem.style.display = 'none';
   });

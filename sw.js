@@ -18,12 +18,8 @@ const CACHE = 'cache-v1';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-  'index.html',
-  './', // Alias for index.html
-  'index.min.css',
   'at-grid-min.css',
   'localforage.min.js',
-  'index.js'
 ];
 
 // The install handler takes care of precaching the resources we always need.
@@ -52,17 +48,30 @@ self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
     var request = event.request;
     if (request.method === 'GET') {
-      if (request.url == 'sw.js'){
-        console.log('sw from network');
-        event.respondWith(fromNetwork(request, 1000));
-        return;
-      }
-      event.respondWith(fromNetwork(request, 1000).catch(function () {
-        return fromCache(request);
+      var new_request = requestFromURL(request)
+      event.respondWith(fromNetwork(new_request, 1000).catch(function () {
+        return fromCache(new_request);
       }));
     }
   }
 });
+
+function requestFromURL(request) {
+  var url = request.url
+  var my_headers = new Headers();
+  if (request.headers.get('x-session-pass')) {
+    my_headers.append('x-session-pass', request.headers.get('x-session-pass'));
+  }
+  headers.append('Content-Type', 'image/jpeg');
+  var relative_url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
+  console.log(relative_url, relative_url.match(/^photo/));
+  if (relative_url.match(/^photo/) || relative_url.match(/^myphotos/)) {
+    console.log(url, 'index.html');
+    return new Request('index.html', {method: 'GET', headers: my_headers});
+  } else {
+    return request;
+  }
+}
 
 function precache(urls) {
   return caches.open(CACHE).then(function (cache) {
