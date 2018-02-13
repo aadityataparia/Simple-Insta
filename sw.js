@@ -18,6 +18,9 @@ const CACHE = 'cache-v1';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
+  'index.html',
+  'index.min.css',
+  'index.js',
   'at-grid-min.css',
   'localforage.min.js',
 ];
@@ -62,11 +65,8 @@ function requestFromURL(request) {
   if (request.headers.get('x-session-pass')) {
     my_headers.append('x-session-pass', request.headers.get('x-session-pass'));
   }
-  headers.append('Content-Type', 'image/jpeg');
   var relative_url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
-  console.log(relative_url, relative_url.match(/^photo/));
   if (relative_url.match(/^photo/) || relative_url.match(/^myphotos/)) {
-    console.log(url, 'index.html');
     return new Request('index.html', {method: 'GET', headers: my_headers});
   } else {
     return request;
