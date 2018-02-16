@@ -790,6 +790,7 @@ var Bfeed = {
         '</form>' +
       '</div>';
     });
+    html = (html == "") ? "No Posts." : html;
     bR.html("feed",html);
   }
 }
