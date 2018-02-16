@@ -790,7 +790,6 @@ var Bfeed = {
         '</form>' +
       '</div>';
     });
-    html = (html == "") ? "No Posts." : html;
     bR.html("feed",html);
   }
 }
@@ -919,6 +918,8 @@ if (path[path.length-1].toLowerCase() == 'myphotos') {
     if (res.status == 200) {
       user.id = res.userid;
       Bfeed.photos = res.results;
+    } else {
+      bR.html("feed", res.message);
     }
   });
 }
