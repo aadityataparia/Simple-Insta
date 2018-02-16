@@ -18,9 +18,6 @@ const CACHE = 'cache-v2';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
-  'index.html',
-  'index.min.css',
-  'index.js',
   'at-grid-min.css',
   'localforage.min.js',
 ];
